@@ -115,8 +115,9 @@ example docker-compose.yml
 version: '3.8'
 
 services:
-  your-service-name:
+  squirrelstack:
     image: squirrelstack:beta1
+    restart: always
     ports:
       - "8000:8000"
     volumes:
