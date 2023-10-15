@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}All-Time Family Budget{% endblock %}
+
+{% block content_title %}All-Time Family Budget{% endblock %}
+
+{% block content %}
+<body>
+    {% block content %}
+    <h1>Yearly Summary</h1>
+    {% for year, monthly_data in yearly_data.items() %}
+    <h2>{{ year }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Expenses</th>
+                <th>Incomes</th>
+                <th>Savings</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in monthly_data %}
+            <tr>
+                <td>{{ data["month"] }}</td>
+                <td>{{ data["total_expenses"] }} RON</td>
+                <td>{{ data["total_incomes"] }} RON</td>
+                <td>{{ data["total_savings"] }} RON</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,257 @@
+/*
+This file is part of Family Budget Web App AKA SquirrelStack.
+
+Family Budget Web App AKA SquirrelStack is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Family Budget Web App AKA SquirrelStack is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Family Budget Web App AKA SquirrelStack.  If not, see <https://www.gnu.org/licenses/>.
+*/
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2980b9;
+    --error-color: #e74c3c;
+    --light-grey: #ecf0f1;
+    --dark-grey: #bdc3c7;
+    --dark-text: #2c3e50;
+    --light-text: #7f8c8d;
+    --white: #fff;
+    --font-size-base: 16px;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Lato', sans-serif;
+    font-size: var(--font-size-base);
+    background-color: var(--light-grey);
+    padding-top: 50px;
+}
+
+h1 {
+    color: var(--dark-text);
+    text-align: center;
+    margin-top: 20px;
+}
+
+h2 {
+    color: var(--dark-text);
+    text-align: center;
+    margin-top: 15px;
+}
+
+h3 {
+    color: var(--dark-text);
+    text-align: center;
+    margin-top: 10px;
+}
+
+h4 {
+    color: var(--dark-text);
+    text-align: center;
+    margin-top: 7.5px;
+}
+
+p {
+    font-size: 1em;
+    color: var(--dark-text);
+}
+
+/* Stile per la barra di navigazione */
+.navbar {
+    background-color: var(--dark-text);
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.navbar li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: var(--white);
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    color: #f39c12;
+}
+
+/* Stile per la paginazione */
+.pagination-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.pagination-nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.pagination-nav a {
+    text-decoration: none;
+    color: var(--dark-text);  /* Adattare il colore al tuo design */
+    font-weight: bold;
+}
+
+.pagination-nav a:hover {
+    color: #f39c12;
+}
+
+button, input[type="submit"] {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: var(--secondary-color);
+}
+
+table {
+    border-collapse: collapse;
+    width: 75%;
+    margin: 20px auto;
+    background-color: var(--white);
+}
+
+table, th, td {
+    border: 1px solid var(--dark-grey);
+    font-size: 0.9em;
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+
+th {
+    background-color: var(--light-grey);
+}
+
+tr:nth-child(even) {
+    background-color: var(--light-grey);
+}
+
+td button {
+    padding: 5px 10px;
+}
+
+form {
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    /*display:flex;*/
+    justify-content: center;
+}
+
+input, select, textarea {
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 1em;
+    width: calc(100% - 22px);
+    border-radius: 5px;
+    border: 1px solid var(--dark-grey);
+}
+
+.btn-danger {
+    background-color: var(--error-color);
+}
+
+.text-danger {
+    color: var(--error-color);
+    font-size: 14px;
+}
+
+table form {
+    margin: 0;
+    padding: 0;
+}
+
+table form input,
+table form select,
+table form textarea {
+    border: none;
+}
+
+table form button {
+    color: var(--white);
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.item {
+    flex-shrink: 0;
+}
+
+li form, ul li form, ol li form, ul.my-list li form {
+    display: none;
+    visibility: hidden;
+}
+
+table button {
+    padding: 5px 10px;
+    font-size: 0.9em;
+}
+
+.summary p {
+    margin-left: 20px;
+    font-size: 1.2em;
+    color: var(--dark-text);
+}
+
+.summary {
+    margin-left: 20px;
+}
+
+ul li button {
+    color: var(--white);
+    padding: 5px 10px;
+    margin: 2px;
+}
+
+td form *:not(button) {
+    display: none;
+}
+
+td > form > *:not(button) {
+    display: none;
+}

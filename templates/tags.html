@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Tag Management{% endblock %}
+
+{% block content %}
+    <h1>Tag Management</h1>
+    
+    <h3>Create a New Tag</h3>
+    <form method="POST" action="{{ url_for('create_tag') }}">
+        <label for="tag_name">Tag Name:</label>
+        <input type="text" id="tag_name" name="tag_name" required>
+        <button type="submit">Create Tag</button>
+    </form>
+    
+    <h3>Existing Tags</h3>
+    <table>    
+        <ul>
+            {% for tag in tags.items %}
+                <li>
+                    {{ tag.name }}
+                    <form method="POST" action="{{ url_for('delete_tag', tag_id=tag.id) }}" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </table>
+    {# Controls for pagination #}
+    <td>
+        {% if tags.has_prev %}
+            <a href="{{ url_for('manage_tags', page=tags.prev_num) }}">Previous</a>
+        {% endif %}
+            <span>Page {{ tags.page }} of {{ tags.pages }}.</span>
+        {% if tags.has_next %}
+            <a href="{{ url_for('manage_tags', page=tags.next_num) }}">Next</a>
+        {% endif %}
+    </td>
+{% endblock %}

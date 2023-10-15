@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}All Entries - Family Budget{% endblock %}
+
+{% block content_title %}All Entries - Family Budget{% endblock %}
+
+{% block content %}
+    <body>
+        <h1>All DB Entries</h1>
+        
+        {% for title, entries, page_arg in [("Expenses", expenses, "page_expenses"), ("Incomes", incomes, "page_incomes"), ("Savings", savings, "page_savings")] %}
+            <h2>{{ title }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Entry</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Tags</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in entries.items %}
+                        <tr>
+                            <td>{{ entry.title }}</td>
+                            <td>{{ entry.amount_ron }} RON</td>
+                            <td>{{ entry.date.strftime('%d/%m/%Y') }}</td>
+                            <td>
+                                {% for tag in entry.tags %}
+                                    {{ tag.name }}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <form method="POST" action="/delete_entry/{{ entry.__tablename__ }}/{{ entry.id }}">
+                                    <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete this entry?')">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <nav class="pagination-nav">
+                <ul class="pagination">
+                    <li class="page-item {% if not entries.has_prev %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('show_all_entries', **{page_arg: entries.prev_num}) }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% for page_num in entries.iter_pages() %}
+                        <li class="page-item {% if page_num == entries.page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('show_all_entries', **{page_arg: page_num}) }}">{{ page_num }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="page-item {% if not entries.has_next %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('show_all_entries', **{page_arg: entries.next_num}) }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        {% endfor %}
+    </body>
+{% endblock %}

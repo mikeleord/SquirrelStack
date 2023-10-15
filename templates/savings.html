@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Saving - Family Budget{% endblock %}
+
+{% block content_title %}Saving - Family Budget{% endblock %}
+
+{% block content %}
+<body>
+    <h2>Current Month's Savings</h2>
+    <p class="summary">Total Savings: {{ total_savings_ron }} RON for the month of {{ current_month }}</p>
+
+    <table>
+    <thead>
+        <tr>
+            <th>Amount (RON)</th>
+            <th>Date</th>
+            <th>Tags</th>
+            <th>Project</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for saving in savings %}
+            <tr>
+                <td>{{ saving.amount_ron }}</td>
+                <td>{{ saving.date.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    {% for tag in saving.tags %}
+                        {{ tag.name }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% if saving.project %}
+                        <p>Project: {{ saving.project.title }}</p>
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{{ url_for('delete_saving', saving_id=saving.id) }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Add a Saving</h2>
+<form method="POST" action="/add_saving">
+    <label for="amount_ron">Amount (RON): </label>
+    <input type="number" name="amount_ron" step="0.01" required>
+    <label for="date">Date: </label>
+    <input type="date" name="date" required>
+    <label for="tags">Select a Tag: </label>
+    <select name="tags">
+        <option value="">Select a Tag</option>
+        {% for tag in tags %}
+            <option value="{{ tag.name }}">{{ tag.name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Add Saving</button>
+</form>
+{% endblock %}

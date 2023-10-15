@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Future Planning - Family Budget{% endblock %}
+
+{% block content_title %}Future Planning - Family Budget{% endblock %}
+
+{% block content %}
+<h1>Future Expenses</h1>
+
+<!-- Form to add a new expense entry -->
+<form method="POST">
+    <label for="title">Title:</label>
+    <input type="text" name="title" required>
+
+    <label for="amount">Amount:</label>
+    <input type="number" name="amount_ron" step="0.01" required>
+
+    <label for="date">Date:</label>
+    <input type="date" name="date" required>
+
+    <label for="tag">Tag:</label>
+    <select name="tag">
+        {% for tag in all_tags %}
+            <option value="{{ tag.id }}">{{ tag.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="category">Category:</label>
+    <select name="category">
+        <option value="expense">Expense</option>
+        <option value="income">Income</option>
+        <option value="saving">Saving</option>
+    </select><br>
+
+    <button type="submit">Add</button>
+</form>
+
+<!-- Displaying future expenses -->
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Tag</th>
+        <th>Category</th>
+        <th>Actions</th>
+    </tr>
+    {% for expense in future_expenses %}
+        <tr>
+            <td class="{% if not expense.paid %}text-danger{% endif %}">{{ expense.title }}</td>
+            <td class="{% if not expense.paid %}text-danger{% endif %}">{{ expense.amount_ron }}</td>
+            <td class="{% if not expense.paid %}text-danger{% endif %}">{{ expense.date }}</td>
+            <td class="{% if not expense.paid %}text-danger{% endif %}">
+                {% for tag in expense.tags %}
+                {{ tag.name }}
+                {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+            <td class="{% if not expense.paid %}text-danger{% endif %}">{{ expense.category }}</td>
+            <td>
+                <a href="{{ url_for('delete_future_expense', expense_id=expense.id) }}">Delete</a>
+                <form method="POST" action="{{ url_for('mark_as_unpaid', expense_id=expense.id) }}">
+                    <button type="submit" class="btn btn-danger">Not Paid</button>
+                </form>
+                <form method="POST" action="{{ url_for('mark_as_paid', expense_id=expense.id) }}">
+                    <button type="submit" class="btn btn-success">Paid</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

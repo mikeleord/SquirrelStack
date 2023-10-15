@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block title %}Data Mining - Family Budget{% endblock %}
+
+{% block content_title %}Data Mining - Family Budget{% endblock %}
+
+{% block content %}
+<body>
+    <header>
+        <h1>Financial Data Mining {{ current_year }}</h1>
+    </header>
+    <section id="summary">
+        <h2>Current Year Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Expenses</th>
+                    <th>Incomes</th>
+                    <th>Savings</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in monthly_data %}
+                <tr>
+                    <td>{{ data.month }}</td>
+                    <td>{{ data.total_expenses }} RON</td>
+                    <td>{{ data.total_incomes }} RON</td>
+                    <td>{{ data.total_savings }} RON</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td>Annual Total</td>
+                    <td>{{ total_expenses_annual }} RON</td>
+                    <td>{{ total_incomes_annual }} RON</td>
+                    <td>{{ total_savings_annual }} RON</td>
+                </tr>
+            </tbody>
+        </table>
+        <canvas id="barChart" width="600" height="400"></canvas>
+        <script>
+            // Formatta i dati per il grafico
+            var chartData = {
+                months: [{% for data in monthly_data %}"{{ data.month }}",{% endfor %}],
+                expenses: [{% for data in monthly_data %}{{ data.total_expenses }},{% endfor %}],
+                incomes: [{% for data in monthly_data %}{{ data.total_incomes }},{% endfor %}],
+                savings: [{% for data in monthly_data %}{{ data.total_savings }},{% endfor %}],
+            };
+        
+            // Ottieni il riferimento al canvas
+            var ctx = document.getElementById('barChart').getContext('2d');
+        
+            // Crea il grafico a barre
+            var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartData.months,
+                    datasets: [
+                        {
+                            label: 'Spese',
+                            data: chartData.expenses,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Introiti',
+                            data: chartData.incomes,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Risparmi',
+                            data: chartData.savings,
+                            backgroundColor: 'rgba(255, 205, 86, 0.2)',
+                            borderColor: 'rgba(255, 205, 86, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </section>
+    <section id="trends">
+        <h2>Monthly Trends</h2>
+        <div class="chart-container">
+            <canvas id="expenseTrendChart" width="600" height="400"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="incomeTrendChart" width="600" height="400"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="savingsTrendChart" width="600" height="400"></canvas>
+        </div>
+        <script>
+            // Formatta i dati per i grafici di tendenza
+            var trendData = {
+                months: [{% for data in monthly_data %}"{{ data.month }}",{% endfor %}],
+                expenses: [{% for data in monthly_data %}{{ data.total_expenses }},{% endfor %}],
+                incomes: [{% for data in monthly_data %}{{ data.total_incomes }},{% endfor %}],
+                savings: [{% for data in monthly_data %}{{ data.total_savings }},{% endfor %}],
+            };
+        
+            // Crea il grafico di tendenza delle spese mensili
+            var expenseTrendCanvas = document.getElementById('expenseTrendChart').getContext('2d');
+            var expenseTrendChart = new Chart(expenseTrendCanvas, {
+                type: 'line',
+                data: {
+                    labels: trendData.months,
+                    datasets: [{
+                        label: 'Spese Mensili',
+                        data: trendData.expenses,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        
+            // Crea il grafico di tendenza degli introiti mensili
+            var incomeTrendCanvas = document.getElementById('incomeTrendChart').getContext('2d');
+            var incomeTrendChart = new Chart(incomeTrendCanvas, {
+                type: 'line',
+                data: {
+                    labels: trendData.months,
+                    datasets: [{
+                        label: 'Introiti Mensili',
+                        data: trendData.incomes,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        
+            // Crea il grafico di tendenza dei risparmi mensili
+            var savingsTrendCanvas = document.getElementById('savingsTrendChart').getContext('2d');
+            var savingsTrendChart = new Chart(savingsTrendCanvas, {
+                type: 'line',
+                data: {
+                    labels: trendData.months,
+                    datasets: [{
+                        label: 'Risparmi Mensili',
+                        data: trendData.savings,
+                        borderColor: 'rgba(255, 205, 86, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </section>
+    <section id="expense-categories">
+        <h2>Current Year Category Tags</h2>
+        <h3>Expense Tags</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Current Year Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag, total in expense_tag_totals %}
+                <tr>
+                    <td>{{ tag }}</td>
+                    <td>{{ total }} RON</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Income Tags</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Current Year Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag, total in income_tag_totals %}
+                <tr>
+                    <td>{{ tag }}</td>
+                    <td>{{ total }} RON</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Savings Tags</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Current Year Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tag, total in saving_tag_totals %}
+                <tr>
+                    <td>{{ tag }}</td>
+                    <td>{{ total }} RON</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <section id="data-export">
+        <a href="/export_all_data_csv" class="btn btn-primary">Export Data to CSV</a>
+    </section>
+    <section id="financial-calendar">
+        <h2>Calendar</h2>
+        <div id="calendar"></div>
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth', // Vista mensile
+                events: '/get_financial_data', // URL per ottenere i dati finanziari
+                eventClick: function (info) {
+                    // Quando viene fatto clic su un evento, puoi visualizzare i dettagli qui
+                    var event = info.event;
+                    alert('Evento: ' + event.title + '\nInizia il: ' + event.start);
+                }
+            });
+            calendar.render();
+        });
+        </script>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Savings Project - Family Budget{% endblock %}
+
+{% block content_title %}Savings Project - Family Budget{% endblock %}
+
+{% block content %}
+
+<h1>Savings Projects</h1>
+
+<h2>Add a new project</h2>
+<form method="POST">
+    <label for="title">Project Name:</label>
+    <input type="text" name="title" required>
+
+    <label for="budget_ron">Budget (RON):</label>
+    <input type="number" name="budget_ron" step="0.01" required>
+
+    <label for="months_to_save">Months to Save:</label>
+    <input type="number" name="months_to_save" required>
+
+    <label for="start_date">Start Date:</label>
+    <input type="date" name="start_date" required>
+
+    <label for="tags">Tag:</label>
+    <select name="tags">
+        {% for tag in tags %}
+            <option value="{{ tag.id }}">{{ tag.name }}</option>
+        {% endfor %}
+    </select>
+   
+    <label for="category">Category:</label>
+    <select name="category" required>
+        <option value="Expense">Expense</option>
+        <option value="Saving">Saving</option>
+        <option value="Income">Income</option>
+    </select><br>
+
+    <button type="submit">Add Project</button>
+</form>
+
+<h2>Existing Savings Projects</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Project Name</th>
+            <th>Budget (RON)</th>
+            <th>Months to Save</th>
+            <th>Start Date</th>
+            <th>Tags</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.title }}</td>
+                <td>{{ project.budget_ron }}</td>
+                <td>{{ project.months_to_save }}</td>
+                <td>{{ project.start_date }}</td>
+                <td>
+                    {% for tag in project.tags %}
+                        {{ tag.name }}
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ project.category }}</td>
+                <td>
+                    <a href="{{ url_for('savings_deadlines', project_id=project.id) }}">Monthly Deadlines</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('savings_projects') }}">Back to the savings projects list</a>
+
+{% endblock %}

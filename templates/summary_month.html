@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% import "_macros.html" as macros %}
+
+{% block title %}Summary for Current Month - Family Budget{% endblock %}
+{% block content_title %}Summary for Current Month - Family Budget{% endblock %}
+
+{% block content %}
+    <h1>Summary for Current Month ( {{ current_month }} )</h1>
+    <p class="summary">Total Expenses: {{ total_expenses_ron }} RON</p>
+    <p class="summary">Total Incomes: {{ total_incomes_ron }} RON</p>
+    <p class="summary">Total Savings: {{ total_savings_ron }} RON</p>
+
+    <h2>Expenses</h2>
+    {{ macros.render_table(expenses, ['Title', 'Amount (RON)', 'Date']) }}
+
+    <h2>Incomes</h2>
+    {{ macros.render_table(incomes, ['Title', 'Amount (RON)', 'Date']) }}
+
+    <h2>Savings</h2>
+    {{ macros.render_table(savings, ['Amount (RON)', 'Date']) }}
+{% endblock %}

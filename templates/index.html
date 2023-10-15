@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Family Budget{% endblock %}
+
+{% block content_title %}Family Budget{% endblock %}
+
+{% block content %}
+    <h2 class="section-title">Summary</h2>
+    <p class="summary">Total Expenses: {{ balance_ron }} RON for the month of {{ current_month }}</p>
+    <p class="summary">Total Incomes: {{ total_incomes_ron }} RON for the month of {{ current_month }}</p>
+    <p class="summary">What's left? {{ total_incomes_ron - balance_ron }} RON</p>
+    <h3>Expenses</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Amount (RON)</th>
+                <th>Date</th>
+                <th>Tags</th>
+                <th>Action</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+                <tr>
+                    <td>{{ expense.title }}</td>
+                    <td>{{ expense.amount_ron }}</td>
+                    <td>{{ expense.date.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        {% for tag in expense.tags %}
+                            {{ tag.name }}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <form method="post" action="{{ url_for('delete_expense', expense_id=expense.id) }}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>    
+    
+    <h4>Add an Expense</h4>
+        <form method="POST" action="/add_expense" class="form">
+            <label for="title">Title: </label>
+            <input type="text" name="title" required>
+            <label for="amount_ron">Amount (RON): </label>
+            <input type="number" name="amount_ron" step="0.01" required>
+            <label for="date">Date: </label>
+            <input type="date" name="date" required>
+            <label for="tags">Select a Tag: </label>
+            <select name="tags">
+                <option value="">Select a Tag</option>
+                {% for tag in tags %}
+                    <option value="{{ tag.name }}">{{ tag.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn">Add</button>
+        </form>
+        <h3>Incomes</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Amount (RON)</th>
+                    <th>Date</th>
+                    <th>Tags</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for income in incomes %}
+                <tr>
+                    <td>{{ income.title }}</td>
+                    <td>{{ income.amount_ron }}</td>
+                    <td>{{ income.date.strftime("%Y-%m-%d") }}</td>
+                    <td>
+                        {% for tag in income.tags %}
+                        {{ tag.name }}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_income', income_id=income.id) }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                        
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4>Add an Income</h4>
+        <form method="POST" action="/add_income">
+            <label for="income_title">Title: </label>
+            <input type="text" name="income_title" required>
+            <label for="income_amount_ron">Amount (RON): </label>
+            <input type="number" name="income_amount_ron" step="0.01" required>
+            <label for="income_date">Date: </label>
+            <input type="date" name="income_date" required>
+            <label for="income_tags">Select a Tag: </label>
+            <select name="income_tags">
+                <option value="">Select a Tag</option>
+                {% for tag in tags %}
+                    <option value="{{ tag.name }}">{{ tag.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Add Income</button>
+        </form>
+{% endblock %}

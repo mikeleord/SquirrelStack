@@ -1,0 +1,117 @@
+
+{% extends "base.html" %}
+
+{% block title %}Summary Year - Family Budget{% endblock %}
+
+{% block content_title %}Summary Year - Family Budget{% endblock %}
+
+{% block content %}
+</head>
+<body>
+    <h2>{{ current_year }}</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Total Expenses (RON)</th>
+            <th>Total Incomes (RON)</th>
+            <th>Total Savings (RON)</th>
+            <th>Budget (RON)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for month_data in current_year_data %}
+            <tr>
+                <td>{{ month_data.month }}</td>
+                <td>{{ month_data.total_expenses }}</td>
+                <td>{{ month_data.total_incomes }}</td>
+                <td>{{ month_data.total_savings }}</td>
+                <td>{{ month_data.total_incomes - (month_data.total_expenses + month_data.total_savings) }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<table>
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Total Expenses (RON)</th>
+            <th>Total Incomes (RON)</th>
+            <th>Total Savings (RON)</th>
+            <th>Budget (RON)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Total</td>
+            <td>{{ total_expenses_year_current }}</td>
+            <td>{{ total_incomes_year_current }}</td>
+            <td>{{ total_savings_year_current }}</td>
+            <td>{{ total_incomes_year_current - (total_expenses_year_current + total_savings_year_current) }}</td>
+        </tr>
+    </tbody>
+</table>
+<h2>{{ current_year - 1 }}</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Total Expenses (RON)</th>
+            <th>Total Incomes (RON)</th>
+            <th>Total Savings (RON)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for month_data in last_year_data %}
+            <tr>
+                <td>{{ month_data.month }}</td>
+                <td>{{ month_data.total_expenses }}</td>
+                <td>{{ month_data.total_incomes }}</td>
+                <td>{{ month_data.total_savings }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<table>
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Total Expenses (RON)</th>
+            <th>Total Incomes (RON)</th>
+            <th>Total Savings (RON)</th>
+            <th>Budget (RON)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Total</td>
+            <td>{{ total_expenses_year_last }}</td>
+            <td>{{ total_incomes_year_last }}</td>
+            <td>{{ total_savings_year_last }}</td>
+            <td>{{ total_incomes_year_last - (total_expenses_year_last + total_savings_year_last) }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>All Time</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Total Expenses (RON)</th>
+            <th>Total Incomes (RON)</th>
+            <th>Total Savings (RON)</th>
+            <th>Budget (RON)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Total</td>
+            <td>{{ total_expenses_all_time }}</td>
+            <td>{{ total_incomes_all_time }}</td>
+            <td>{{ total_savings_all_time }}</td>
+            <td>{{ total_incomes_all_time - (total_expenses_all_time + total_savings_all_time) }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

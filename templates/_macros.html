@@ -1,0 +1,20 @@
+{% macro render_table(items, headers) %}
+    <table>
+        <thead>
+            <tr>
+                {% for header in headers %}
+                    <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.title if item.title is defined else item.amount_ron }}</td>
+                    <td>{{ item.amount_ron if item.title is defined else item.date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ item.date.strftime('%Y-%m-%d') if item.title is defined else "" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

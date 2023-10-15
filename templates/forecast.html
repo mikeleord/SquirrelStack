@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Forecast{% endblock %}
+
+{% block content %}
+
+<h1>Financial Forecast</h1>
+
+<h2>Historical Data (Last 12 months)</h2>
+<table border="1">
+    <tr>
+        <th>Month</th>
+        <th>Expenses</th>
+        <th>Income</th>
+        <th>Savings</th>
+    </tr>
+    {% for i in range(historical_data['Month']|length) %}
+    <tr>
+        <td>{{ historical_data['Month'][i] }}</td>
+        <td>{{ historical_data['Expenses'][i] }}</td>
+        <td>{{ historical_data['Income'][i] }}</td>
+        <td>{{ historical_data['Savings'][i] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Forecast (Next 6 Months)</h2>
+<table border="1">
+    <tr>
+        <th>Month</th>
+        <th>Expenses</th>
+        <th>Income</th>
+        <th>Savings</th>
+    </tr>
+    {% for i in range(forecast_data['Month']|length) %}
+    <tr>
+        <td>{{ forecast_data['Month'][i] }}</td>
+        <td>{{ forecast_data['Expenses'][i] }}</td>
+        <td>{{ forecast_data['Income'][i] }}</td>
+        <td>{{ forecast_data['Savings'][i] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</div>
+
+{% endblock %}

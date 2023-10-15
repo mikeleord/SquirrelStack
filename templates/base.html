@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your Title Here{% endblock %}</title>
+    <!-- Add your CSS links or JS scripts common to all pages here -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/tags">Manage Tags</a></li>
+            <li><a href="/savings">Savings</a></li>
+            <li><a href="/summary_month">Monthly Summary</a></li>
+            <li><a href="/summary_year">Yearly Summary</a></li>
+            <li><a href="/all">All Entries</a></li>
+            <li><a href="/data_mining">Data Mining</a></li>
+            <li><a href="/future_expenses">Future Movements</a></li>
+            <li><a href="/savings_projects">Savings Project</a></li>
+            <li><a href="/forecast">Forecast</a></li>
+        </ul>
+    </nav>
+    <!--
+    This file is part of Family Budget Web App AKA SquirrelStack.
+
+    Family Budget Web App AKA SquirrelStack is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Family Budget Web App AKA SquirrelStack is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Family Budget Web App AKA SquirrelStack.  If not, see <https://www.gnu.org/licenses/>.        
+    -->
+    {% block content %}
+    {% endblock %}
+    
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Monthly Deadlines - Family Budget{% endblock %}
+
+{% block content_title %}Monthly Deadlines for the Project:{{ project.title }} {% endblock %}
+
+{% block content %}
+    <h2>Monthly Deadlines</h2>
+
+    <p class="summary"><strong>Project Name:</strong> {{ project.title }}</p>
+    <p class="summary"><strong>Budget (RON):</strong> {{ project.budget_ron }}</p>
+    <p class="summary"><strong>Months to Save:</strong> {{ project.months_to_save }}</p>
+    <p class="summary"><strong>Start Date:</strong> {{ project.start_date }}</p>
+    <p class="summary"><strong>Tags:</strong> 
+        {% for tag in project.tags %}
+            {{ tag.name }}
+            {% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    <p class="summary"><strong>Category:</strong> {{ project.category }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Amount (RON)</th>
+                <th>Status</th>
+                <th>Actions</th> <!-- Added a header for actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for deadline in deadlines %}
+                <tr>
+                    <td>{{ deadline.date }}</td>
+                    <td>{{ deadline.amount_ron }}</td>
+                    <td>
+                        {% if deadline.saved %}
+                            <span style="color: green;">Paid</span>
+                        {% else %}
+                            <span style="color: red;">Not Paid</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('update_savings_deadline', deadline_id=deadline.id, saved=1) }}">
+                            <button type="submit" class="btn btn-success">Saved</button>
+                        </form>
+                        <form method="POST" action="{{ url_for('update_savings_deadline', deadline_id=deadline.id, saved=0) }}">
+                            <button type="submit" class="btn btn-danger">Not Saved</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('savings_projects') }}">Back to the savings projects list</a>
+{% endblock %}
